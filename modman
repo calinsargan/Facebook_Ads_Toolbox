@@ -1,0 +1,11 @@
+src/app/code/community/Facebook/*	app/code/community/Facebook/
+src/app/etc/modules/Facebook_AdsToolbox.xml	app/etc/modules/Facebook_AdsToolbox.xml
+
+src/app/design/adminhtml/default/default/layout/*	app/design/adminhtml/default/default/layout/
+src/app/design/adminhtml/default/default/template/*	app/design/adminhtml/default/default/template/
+
+src/app/design/frontend/base/default/layout/*	app/design/frontend/base/default/layout/
+src/app/design/frontend/base/default/template/*	app/design/frontend/base/default/template/
+
+src/js/Facebook/*	js/Facebook/
+src/skin/adminhtml/base/default/Facebook/*	skin/adminhtml/base/default/Facebook/
