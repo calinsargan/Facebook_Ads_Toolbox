@@ -52,4 +52,14 @@ class Facebook_AdsToolbox_Adminhtml_FacebookadstoolboxdiasettingidController
       'Set DIA setting ID failed:'.($dia_setting_id ?: 'null')
     );
   }
+
+  /**
+  * ACL check
+  *
+  * @return bool
+  */
+  protected function _isAllowed()
+  {
+      return Mage::getSingleton('admin/session')->isAllowed('facebook_ads_toolbox/pixel_setup');
+  }
 }

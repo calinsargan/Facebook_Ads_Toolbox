@@ -47,4 +47,14 @@ class Facebook_AdsToolbox_Adminhtml_FacebookadstoolboxpixelController
   public function isPixelIdValid($pixel_id) {
     return preg_match("/^\d{1,20}$/", $pixel_id) !== 0;
   }
+
+  /**
+  * ACL check
+  *
+  * @return bool
+  */
+  protected function _isAllowed()
+  {
+      return Mage::getSingleton('admin/session')->isAllowed('facebook_ads_toolbox/pixel_setup');
+  }
 }

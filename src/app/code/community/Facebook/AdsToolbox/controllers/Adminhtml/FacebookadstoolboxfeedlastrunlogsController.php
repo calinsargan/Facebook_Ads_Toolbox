@@ -81,4 +81,14 @@ class Facebook_AdsToolbox_Adminhtml_FacebookadstoolboxfeedlastrunlogsController
 
     $this->ajaxSend($response);
   }
+
+  /**
+  * ACL check
+  *
+  * @return bool
+  */
+  protected function _isAllowed()
+  {
+      return Mage::getSingleton('admin/session')->isAllowed('facebook_ads_toolbox/pixel_setup');
+  }
 }
