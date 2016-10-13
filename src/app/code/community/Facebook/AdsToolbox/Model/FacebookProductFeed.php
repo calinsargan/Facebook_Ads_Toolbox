@@ -206,11 +206,12 @@ class FacebookProductFeed {
     $items[self::ATTR_PRICE] = $this->buildProductAttr('price',
       sprintf('%s %s',
         Mage::getModel('directory/currency')->format(
-          $product->getFinalPrice(),
+          // $product->getFinalPrice(),
+          Mage::helper('tax')->getPrice($product, $product->getFinalPrice()),
           array('display'=>Zend_Currency::NO_SYMBOL),
           false),
         Mage::app()->getStore()->getDefaultCurrencyCode()));
-
+    
     $items[self::ATTR_SHORT_DESCRIPTION] = $this->buildProductAttr(self::ATTR_SHORT_DESCRIPTION,
       $product->getShortDescription());
     return $items;
