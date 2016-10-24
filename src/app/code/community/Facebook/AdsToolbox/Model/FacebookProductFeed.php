@@ -30,6 +30,8 @@ class FacebookProductFeed {
     'facebook_adstoolbox/feed/generation/enabled';
   const PATH_FACEBOOK_ADSTOOLBOX_FEED_GENERATION_FORMAT =
     'facebook_adstoolbox/feed/generation/format';
+  const PATH_FACEBOOK_ADSTOOLBOX_CATALOG_OUTOFSTOCK =
+    'facebook_adstoolbox/catalog/out_of_stock';
 
   public static function log($info) {
     Mage::log($info, Zend_Log::INFO, FacebookAdsToolbox::FEED_LOGFILE);
@@ -41,6 +43,10 @@ class FacebookProductFeed {
         self::PATH_FACEBOOK_ADSTOOLBOX_FEED_GENERATION_FORMAT) ?: 'TSV',
       'enabled' => Mage::getStoreConfig(
         self::PATH_FACEBOOK_ADSTOOLBOX_FEED_GENERATION_ENABLED) ?: false,
+      'catalog' => array(
+        'out_of_stock'  => (boolean)Mage::getStoreConfig(
+        self::PATH_FACEBOOK_ADSTOOLBOX_CATALOG_OUTOFSTOCK)
+        ),
     );
   }
 
@@ -178,13 +184,9 @@ class FacebookProductFeed {
     $items[self::ATTR_LINK] = $this->buildProductAttr(self::ATTR_LINK,
       FacebookAdsToolbox::getBaseUrl().
       $product->getUrlPath());
-    $productImage = $product->getImage();
-    if (!$productImage) {
-      $productImage = $product->getSmallImage();
-    }
     $items[self::ATTR_IMAGE_LINK] = $this->buildProductAttr(self::ATTR_IMAGE_LINK,
       FacebookAdsToolbox::getBaseUrlMedia().
-      'catalog/product'.$productImage);
+      'catalog/product'.$product->getImage());
 
     $brand = null;
     if ($product->getData('brand')) {
@@ -270,10 +272,17 @@ class FacebookProductFeed {
         ->setCurPage($count / $batch_max + 1);
 
       foreach ($products as $product) {
+        $includeOutOfStock = (boolean)self::getCurrentSetup()['catalog']['out_of_stock'];
         if ($product->getVisibility() !=
               Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE &&
             $product->getStatus() !=
-              Mage_Catalog_Model_Product_Status::STATUS_DISABLED) {
+              Mage_Catalog_Model_Product_Status::STATUS_DISABLED 
+            ) {
+            if (!$includeOutOfStock) {
+              if (!$product->isSaleable()) {
+                continue;
+              }
+            }
           $e = $this->buildProductEntry($product);
           $io->streamWrite($e."\n");
         }

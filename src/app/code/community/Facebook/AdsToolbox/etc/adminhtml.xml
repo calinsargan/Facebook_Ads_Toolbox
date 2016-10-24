@@ -23,6 +23,17 @@
               </pixel_setup>
             </children>
           </facebook_ads_toolbox>
+          <system>
+              <children>
+                <config>
+                  <children>
+                    <facebook_adstoolbox>
+                      <title>Facebook AdsToolbox Settings Configuration</title>
+                    </facebook_adstoolbox>
+                  </children>
+                </config>
+              </children>
+            </system>
         </children>
       </admin>
     </resources>

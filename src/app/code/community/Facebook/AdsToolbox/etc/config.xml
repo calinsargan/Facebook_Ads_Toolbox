@@ -92,4 +92,11 @@
       </facebookadstoolbox_feed_regenerate>
     </jobs>
   </crontab>
+  <default>
+    <facebook_adstoolbox>
+      <catalog>
+        <out_of_stock>1</out_of_stock>
+      </catalog>
+    </facebook_adstoolbox>
+  </default>
 </config>
