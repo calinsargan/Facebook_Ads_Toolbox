@@ -11,7 +11,6 @@
 require_once 'app/Mage.php';
 require_once __DIR__.'/../lib/fb.php';
 
-// DEPRECATED : Kept around for legacy reasons.
 class Facebook_AdsToolbox_ProductfeedController
   extends Mage_Core_Controller_Front_Action {
 

@@ -77,6 +77,23 @@ class FacebookAdsToolbox {
     return $debug_key;
   }
 
+  public static function getStoreName() {
+    $frontendName = Mage::app()->getStore()->getFrontendName();
+    if ($frontendName !== 'Default') {
+      return $frontendName;
+    }
+    $defaultStoreId = self::getDefaultStoreID();
+    $defaultStoreName = Mage::getModel('core/store')->load($defaultStoreId)->getGroup()->getName();
+    if ($defaultStoreName !== 'Main Website Store' && $defaultStoreName !== 'Main Store') {
+      return $defaultStoreName;
+    }
+    return 'Original';
+  }
+
+  public static function getDefaultStoreID() {
+    return Mage::app()->getWebsite(true)->getDefaultGroup()->getDefaultStoreId();
+  }
+
   public static $fbTimezones =  array(
     "africa_accra" => 59,
     "africa_cairo" => 53,

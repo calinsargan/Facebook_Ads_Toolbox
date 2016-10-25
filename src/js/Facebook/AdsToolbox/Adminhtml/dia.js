@@ -132,8 +132,9 @@ var DiaFlowContainer = React.createClass({
         }
         var payload = { diaSettingId: params.setting_id };
         new Ajax.Request(window.facebookAdsToolboxAjax.setDiaSettingId, {
-          method: 'post',
-          parameters: { diaSettingId: payload.diaSettingId },
+          parameters: {
+            diaSettingId: payload.diaSettingId
+          },
           onSuccess: function onSuccess() {
             _this.setState({ diaSettingId: payload.diaSettingId });
             _this.ackToPopup('set merchant settings', params);
@@ -150,7 +151,9 @@ var DiaFlowContainer = React.createClass({
           return;
         }
         new Ajax.Request(window.facebookAdsToolboxAjax.setPixelId, {
-          parameters: { pixelId: params.pixel_id },
+          parameters: {
+            pixelId: params.pixel_id
+          },
           onSuccess: function onSuccess(transport) {
             var response = transport.responseText.evalJSON();
             var msg = '';
@@ -173,7 +176,6 @@ var DiaFlowContainer = React.createClass({
 
       'gen feed': function genFeed(params) {
         new Ajax.Request(window.facebookAdsToolboxAjax.generateFeedNow, {
-          method: 'post',
           parameters: {},
           onSuccess: function onSuccess(transport) {
             var response = transport.responseText.evalJSON();
@@ -217,7 +219,6 @@ var DiaFlowContainer = React.createClass({
   openPopup: function openPopup() {
     if (!this.state.diaSettingId && window.facebookAdsToolboxConfig.feed.totalVisibleProducts < 10000) {
       new Ajax.Request(window.facebookAdsToolboxAjax.generateFeedNow, {
-        method: 'post',
         parameters: {useCache : true},
         onSuccess: function onSuccess() {}
       });
@@ -238,7 +239,6 @@ var DiaFlowContainer = React.createClass({
   },
   launchDiaWizard: function launchDiaWizard() {
     this.diaConfig = { 'clientSetup': window.facebookAdsToolboxConfig };
-    this.diaConfig.feedPrepared = window.facebookAdsToolboxConfig.feedPrepared;
     this.openPopup();
   },
   closeModal: function closeModal() {
