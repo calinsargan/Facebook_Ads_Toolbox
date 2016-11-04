@@ -203,8 +203,14 @@ class FacebookProductFeed {
     }
     $items[self::ATTR_CONDITION] = ($this->isValidCondition($condition)) ? $condition : $this->defaultCondition();
 
+    $stockStatus = $stock->getData('is_in_stock');
+    if ($stockStatus) {
+      // but is it saleable?
+      $stockStatus = $product->isSaleable();
+    }
+
     $items[self::ATTR_AVAILABILITY] = $this->buildProductAttr(self::ATTR_AVAILABILITY,
-      $stock->getData('is_in_stock') ? 'in stock' : 'out of stock');
+      $stockStatus ? 'in stock' : 'out of stock');
     $items[self::ATTR_PRICE] = $this->buildProductAttr('price',
       sprintf('%s %s',
         Mage::getModel('directory/currency')->format(
