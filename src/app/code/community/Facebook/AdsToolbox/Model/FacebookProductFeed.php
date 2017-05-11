@@ -184,9 +184,14 @@ class FacebookProductFeed {
     $items[self::ATTR_LINK] = $this->buildProductAttr(self::ATTR_LINK,
       FacebookAdsToolbox::getBaseUrl().
       $product->getUrlPath());
+
+    $productImage = $product->getImage();
+    if (!$productImage) {
+      $productImage = $product->getSmallImage();
+    }
     $items[self::ATTR_IMAGE_LINK] = $this->buildProductAttr(self::ATTR_IMAGE_LINK,
       FacebookAdsToolbox::getBaseUrlMedia().
-      'catalog/product'.$product->getImage());
+      'catalog/product'.$productImage);
 
     $brand = null;
     if ($product->getData('brand')) {
